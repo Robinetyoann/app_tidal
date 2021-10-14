@@ -1,0 +1,89 @@
+
+    <div class="container nav-margin-top">
+    
+            <div class="col-md-5 mx-auto">
+                <div id="first">
+                    <div class="myform form ">
+                        <div class="logo mb-3">
+                            <div class="col-md-12 text-center">
+                                <h1>Connexion</h1>
+                            </div>
+                        </div>
+                        <form action="" method="post" name="login">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Adresse E-mail</label>
+                                <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Entrer votre E-mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mot de passe</label>
+                                <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Entrer votre mot de passe">
+                            </div>
+                            <div class="col-md-12 text-center ">
+                                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Connexion</button>
+                            </div>
+                            <div class="col-md-12 ">
+                                <div class="login-or">
+                                    <hr class="hr-or">
+                                    <span class="span-or">ou</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p class="text-center">Vous n'avez pas de compte ? <a href="#signUp" id="signup">Inscription</a></p>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+               
+            </div>
+     
+    </div>   
+    <script>
+        
+     
+        
+       
+        $(function() {
+            $("form[name='login']").validate({
+                rules: {
+                    
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        
+                    }
+                },
+                messages: {
+                    email: "Entrer une addresse mail valide",
+                    
+                    password: {
+                        required: "Entrer un mot de passe",
+                        
+                    }
+                    
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+        
+        
+        
+      
+    </script>
+    
+    
+    <!-- Pour le formulaire de login les vérifications JQuery-->
+    
+    
+    
+    
+    
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    
+    
+
