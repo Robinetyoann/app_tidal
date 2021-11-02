@@ -120,10 +120,14 @@ Router.prototype = {
                 }
 
                 let script = document.createElement('script')
+                if(url === 'js/pages/dataTable.js') {
+                    script.type = 'module';
+                }
                 script.src = url
                 script.id = url_plit[url_plit.length - 1]
                 document.body.appendChild(script);
             });
+
 
         })(this);
     }
