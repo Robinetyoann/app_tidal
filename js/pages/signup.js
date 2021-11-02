@@ -30,7 +30,7 @@ $(function () {
             email: "Entrer une addresse mail valide"
         },
 
-        submitHandler: function (form) {
+        submitHandler: async function (form) {
             // form.submit();
             let firstname = document.querySelector('#firstname')
             let lastname = document.querySelector('#lastname')
@@ -54,25 +54,17 @@ $(function () {
                 body: formData
             };
 
-            const myRequest = new Request('http://api_tidal/Authentification/register', myInit);
-
-            fetch(myRequest)
-                .then(function (response) {
-                    response.json().then(function (data) {
-                        if (data.code == 200) {
-                            window.location.href = '#login'
-                           
-                        }
-
-                    });
-
+            await fetch('http://localhost:8888/api_tidal/authentification/register', myInit)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code == 200) {
+                        window.location.href = '#login'
+                       
+                    }
                 })
-                .catch((err) => {
-                    err.json().then(function (data) {
-                        console.log('err:' + data);
-                    });
-
-                })
+                .catch(error => {
+                    return error;
+                });
         }
     });
 });

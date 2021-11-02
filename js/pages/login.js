@@ -20,15 +20,14 @@ $(function() {
               }
               
           },
-          submitHandler: function(form) {
+          submitHandler: async function(form) {
 
-            let email = document.querySelector('#email')
-            let password = document.querySelector('#password')
+            let email = document.querySelector('#email').value
+            let password = document.querySelector('#password').value
 
             var formData = new FormData();
-            formData.append('email', email.value);
-            formData.append('password', password.value);
-
+            formData.append('email', email);
+            formData.append('password', password);
 
             var myHeaders = new Headers();
 
@@ -40,38 +39,29 @@ $(function() {
                 body: formData
             };
 
-            const myRequest = new Request('http://api_tidal/Authentification/', myInit);
+            await fetch('http://localhost:8888/api_tidal/authentification', myInit)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.code === 200) {                           
+                        localStorage.setItem("token", "Bearer " + data.data.token);
 
-            fetch(myRequest)
-                .then(function (response) {
-                    response.json().then(function (data) {
-                      
-                          //  console.log(response)
-                        if(data.code == 200)
-                        {
-                            let tokenData= JSON.parse(data.data);          
-                            
-                           localStorage.setItem("token", "Bearer "+tokenData.token);
-
-                            let div_account = document.querySelector('#div_account')
-                            let div_connect = document.querySelector('#div_connect')
-                            let div_disconnect = document.querySelector('#div_disconnect')
-                            div_account.style.display = "block"
-                            div_connect.style.display = "none"
-                            div_disconnect.style.display = "block"
-                            
-                            window.location.href = '#home'
-                        }else{
+                        let div_account = document.querySelector('#div_account')
+                        let div_connect = document.querySelector('#div_connect')
+                        let div_disconnect = document.querySelector('#div_disconnect')
+                        div_account.style.display = "block"
+                        div_connect.style.display = "none"
+                        div_disconnect.style.display = "block"
+                        
+                        window.location.href = '#home'
+                        } else {
                             let error_login = document.querySelector('#error_login')
                             error_login.style.display = "block"
                         }
-                       
-
-                    });
-
                 })
-              
-           // form.submit();
+                .catch(error => {
+                    return error;
+                });
           }
       });
   });
