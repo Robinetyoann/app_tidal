@@ -40,7 +40,7 @@ $(function() {
                 body: formData
             };
 
-            const myRequest = new Request('http://tidal/Authentification/', myInit);
+            const myRequest = new Request('http://api_tidal/Authentification/', myInit);
 
             fetch(myRequest)
                 .then(function (response) {

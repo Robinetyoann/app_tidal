@@ -54,14 +54,14 @@ $(function () {
                 body: formData
             };
 
-            const myRequest = new Request('http://tidal/Authentification/register', myInit);
+            const myRequest = new Request('http://api_tidal/Authentification/register', myInit);
 
             fetch(myRequest)
                 .then(function (response) {
                     response.json().then(function (data) {
                         if (data.code == 200) {
                             window.location.href = '#login'
-                           // window.location.replace("http://apptidal/#login");
+                           
                         }
 
                     });
