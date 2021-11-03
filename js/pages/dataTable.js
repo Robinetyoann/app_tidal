@@ -136,16 +136,20 @@ $(async () => {
                 str += ' '
             });
             const text = str.slice(0, -1);
-            const filteredSymptomes = await fetchKeywords(text);
-            const idSymptomes = filteredSymptomes.map((symptome) => symptome.idS)
-
-            formattedData = formattedData.filter(({symptomes}) => {
-                return symptomes.some(symptome => idSymptomes.includes(symptome.idS))
-            })
-            console.log(idSymptomes)
-            console.log(formattedData)
-
-            initTable('#table', formattedData)
+            try {
+                const filteredSymptomes = await fetchKeywords(text);
+                const idSymptomes = filteredSymptomes.map((symptome) => symptome.idS)
+    
+                formattedData = formattedData.filter(({symptomes}) => {
+                    return symptomes.some(symptome => idSymptomes.includes(symptome.idS))
+                })
+                console.log(idSymptomes)
+                console.log(formattedData)
+    
+                initTable('#table', formattedData)
+            } catch (error) {
+                console.log(error)
+            }
         }
     })
 });
