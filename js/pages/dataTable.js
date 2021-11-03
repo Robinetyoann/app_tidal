@@ -1,4 +1,4 @@
-import { initDatas, addSelectOptions } from "../data-table/js/data-tableFunc.js";
+import { initDatas, addSelectOptions, renderSearchKeyWordInput } from "../data-table/js/data-tableFunc.js";
 import { formatedMeridiens } from "../data-table/util/func.js";
 import { updatePathologies } from '../data-table/store/data-table/pathoActions.js';
 
@@ -69,7 +69,9 @@ export const filters = {
     meridiens: [],
 };
 
+
 $(async () => {
+    renderSearchKeyWordInput();
     $(".selectpicker").selectpicker("refresh");
     addSelectOptions(datas.pathologies.data);
     const { pathologies } = datas;
@@ -102,4 +104,9 @@ $(async () => {
                 break;
         }
     });
+
+    $('#searchKeyWords').on('click', () => {
+        const keyword = $('#keyword').val();
+        
+    })
 });

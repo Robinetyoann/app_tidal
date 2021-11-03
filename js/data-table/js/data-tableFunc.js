@@ -17,3 +17,20 @@ export const addSelectOptions = async (data) => {
 export const initDatas = () => {
     return apiCall();
 }
+
+const isGranted = () => {
+    const token = localStorage.getItem('token');
+    if(token !== null) {
+        return true;
+    }
+    return false;
+}
+
+export const renderSearchKeyWordInput = () => {
+    const keyWordDiv = $('#divKeyWord');
+    keyWordDiv.css({'display': 'none'})
+    if(isGranted()) {
+        keyWordDiv.css({'display': 'flex'})
+    }
+}
+
