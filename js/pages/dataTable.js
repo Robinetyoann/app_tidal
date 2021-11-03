@@ -101,6 +101,4 @@ $(async () => {
                 break;
         }
     });
-
-    //console.log(formattedData)
 });

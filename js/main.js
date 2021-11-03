@@ -1,11 +1,11 @@
-function disconnect() {
+const disconnect = () => {
     localStorage.removeItem('token');
     window.location.href = '#home'
     verif_display_connection()
 
 }
 
-function verif_display_connection() {
+const verif_display_connection = () => {
     var token = localStorage.getItem("token")
     let div_disconnect = document.querySelector('#div_disconnect')
     let div_connect = document.querySelector('#div_connect')
@@ -19,7 +19,5 @@ function verif_display_connection() {
         div_connect.style.display = "none"
         div_account.style.display = "block"
     }
-    
 }
-
 verif_display_connection()

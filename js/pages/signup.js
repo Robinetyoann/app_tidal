@@ -1,5 +1,4 @@
-$(function () {
-
+$(() => {
     $("form[name='registration']").validate({
         rules: {
             firstname: {
@@ -31,21 +30,17 @@ $(function () {
         },
 
         submitHandler: async function (form) {
-            // form.submit();
             let firstname = document.querySelector('#firstname')
             let lastname = document.querySelector('#lastname')
             let email = document.querySelector('#email')
             let password = document.querySelector('#password')
-
             var formData = new FormData();
+            var myHeaders = new Headers();
             formData.append('firstname', firstname.value);
             formData.append('lastname', lastname.value);
             formData.append('email', email.value);
             formData.append('password', password.value);
-
-
-            var myHeaders = new Headers();
-
+            
             var myInit = {
                 method: 'POST',
                 headers: myHeaders,

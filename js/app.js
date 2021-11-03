@@ -1,7 +1,6 @@
 'use strict';
-
 (function () {
-    function init() {
+    const init = () => {
         var router = new Router([
             new Route('home', 'home.html', undefined, true),            
             new Route('login', 'login.html', 'login.js'),            

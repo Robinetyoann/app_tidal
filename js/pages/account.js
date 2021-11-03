@@ -1,5 +1,5 @@
 
-function parseJwt(token) {
+const parseJwt = (token) => {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -10,12 +10,8 @@ function parseJwt(token) {
 };
 var token = localStorage.getItem("token")
 if (token != null) {
-    console.log(token)
-    console.log(parseJwt(token))
-
     let tokenDecoded = parseJwt(token)
     let account_info = document.querySelector('#account_info')
-
     let id = document.createElement('div')
     let email = document.createElement('div')
     

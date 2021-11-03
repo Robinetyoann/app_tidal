@@ -1,5 +1,4 @@
 'use stict';
-
 function Route(name, htmlName,jsScripts, defaultRoute) {
     try {
         if(!name || !htmlName) {

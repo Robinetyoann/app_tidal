@@ -1,35 +1,32 @@
 $(function() {
-      $("form[name='login']").validate({
-       
-          rules: {
-             
-              email: {
-                  required: true,
-                  email: true
-              },
-              password: {
-                  required: true,
-              }
-          },
-          messages: {
-              email: "Entrer une addresse mail valide",
-              
-              password: {
-                  required: "Entrer un mot de passe",
-                  
-              }
-              
-          },
-          submitHandler: async function(form) {
+    $("form[name='login']").validate({
+        rules: {
+            
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+            }
+        },
+        messages: {
+            email: "Entrer une addresse mail valide",
+            
+            password: {
+                required: "Entrer un mot de passe",
+                
+            }
+            
+        },
+        submitHandler: async function(form) {
 
             let email = document.querySelector('#email').value
             let password = document.querySelector('#password').value
-
+            var myHeaders = new Headers();
             var formData = new FormData();
             formData.append('email', email);
             formData.append('password', password);
-
-            var myHeaders = new Headers();
 
             var myInit = {
                 method: 'POST',
@@ -62,9 +59,9 @@ $(function() {
                 .catch(error => {
                     return error;
                 });
-          }
-      });
-  });
+        }
+    });
+});
   
   
   

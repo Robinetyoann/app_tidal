@@ -1,5 +1,4 @@
 'use strict';
-
 function Router(routes) {
     try {
         if (!routes) {
@@ -11,7 +10,6 @@ function Router(routes) {
         console.error(e);
     }
 }
-
 Router.prototype = {
     routes: undefined,
     rootElem: undefined,
@@ -19,6 +17,7 @@ Router.prototype = {
         this.routes = routes;
         this.rootElem = document.getElementById('app');
     },
+    
     init: function () {
         var r = this.routes;
         (function (scope, r) {
@@ -33,35 +32,10 @@ Router.prototype = {
             for (var i = 0, length = r.length; i < length; i++) {
                 var route = r[i];
                 if (route.isActiveRoute(window.location.hash.substr(1))) {
-
                     scope.goToRoute(route.htmlName);
-                   /* let app = document.querySelector('#app')
-                    let scripts = document.querySelectorAll('#app > script')
-                    console.log(scripts)
-                    if (scripts.length != 0) {
-                        console.log('coucou')
-                        scripts.forEach(scrpt => {
-                            if (scrpt.attributes.length != 0) {
-                                let new_script = document.createElement('script')
-                                new_script.src = scrpt.attributes.src.value
-                                app.appendChild(new_script)
-                            }
-
-                        })
-                    }*/
-
-                    /* scripts.forEach((script)=>{
-                        script.remove()
-                    })
-                    console.log('azer  ,', )
-                   
-*/
-                   if (route.jsScripts != undefined) {
+                    if (route.jsScripts != undefined) {
                         scope.loadJs(route.jsScripts);
                     }
-
-
-
                 }
             }
         } else {
@@ -69,20 +43,6 @@ Router.prototype = {
                 var route = r[i];
                 if (route.default) {
                     scope.goToRoute(route.htmlName);
-                   /* let app = document.querySelector('#app')
-                    let scripts = document.querySelectorAll('#app > script')
-                    console.log(scripts)
-                    if (scripts.length != 0) {
-                        
-                        scripts.forEach(scrpt => {
-                            if (scrpt.attributes.length != 0) {
-                                let new_script = document.createElement('script')
-                                new_script.src = scrpt.attributes.src.value
-                                app.appendChild(new_script)
-                            }
-
-                        })
-                    }*/
                 }
             }
         }
@@ -99,8 +59,6 @@ Router.prototype = {
             xhttp.open('GET', url, true);
             xhttp.send();
         })(this);
-
-
     },
     loadJs: function (jsScripts) {
         (function (scope) {
@@ -108,18 +66,13 @@ Router.prototype = {
                 jsScripts = [jsScripts]
             }
             jsScripts.forEach(js => {
-
-
                 var url = 'js/pages/' + js
                 let url_plit = url.split('/')
-
+                let script = document.createElement('script')
                 let test = document.getElementById(url_plit[url_plit.length - 1])
-                
                 if (test != null) {
                     test.remove();
                 }
-
-                let script = document.createElement('script')
                 if(url === 'js/pages/dataTable.js') {
                     script.type = 'module';
                 }
@@ -127,8 +80,6 @@ Router.prototype = {
                 script.id = url_plit[url_plit.length - 1]
                 document.body.appendChild(script);
             });
-
-
         })(this);
     }
 };
