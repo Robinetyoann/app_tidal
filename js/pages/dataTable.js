@@ -1,4 +1,4 @@
-import { initDatas, addSelectOptions } from "../data-table/js/data-tableFunc.js";
+import { initDatas, addSelectOptions, renderSearchKeyWordInput } from "../data-table/js/data-tableFunc.js";
 import { formatedMeridiens } from "../data-table/util/func.js";
 import { updatePathologies } from '../data-table/store/data-table/pathoActions.js';
 
@@ -69,7 +69,30 @@ export const filters = {
     meridiens: [],
 };
 
+const fetchKeywords = async (search) => {
+    const symptomes = await fetch('http://localhost:8888/api_tidal/symptomes/keywords')
+        .then(response => response.json())
+        .then(response => {
+            return response;
+        })
+        .catch(error => {
+            return error;
+        });
+
+        const keyWordWithSymptomes = symptomes.data.filter(symptome => symptome.keywords !== null)
+
+    
+        const filteredSymptomes = keyWordWithSymptomes.filter(({keywords}) => {
+            return keywords.some(keyword => keyword.name.includes(search))
+        })
+        return filteredSymptomes;
+}
+
+
 $(async () => {
+    
+    renderSearchKeyWordInput();
+    $(".selectpicker").selectpicker("refresh");
     addSelectOptions(datas.pathologies.data);
     const { pathologies } = datas;
     let formattedData = formatedMeridiens(pathologies.data)
@@ -101,4 +124,32 @@ $(async () => {
                 break;
         }
     });
+
+    $('#searchKeyWords').on('click', async () => {
+        const keyword = $('#keyword').val();
+        const regex = new RegExp(/[a-z]+/, 'gi');
+        const match = keyword.match(regex) ? true : false;
+        let str = '';
+        if(match) {
+            keyword.match(regex).forEach(element => {
+                str += element;
+                str += ' '
+            });
+            const text = str.slice(0, -1);
+            try {
+                const filteredSymptomes = await fetchKeywords(text);
+                const idSymptomes = filteredSymptomes.map((symptome) => symptome.idS)
+    
+                formattedData = formattedData.filter(({symptomes}) => {
+                    return symptomes.some(symptome => idSymptomes.includes(symptome.idS))
+                })
+                console.log(idSymptomes)
+                console.log(formattedData)
+    
+                initTable('#table', formattedData)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    })
 });
