@@ -70,6 +70,7 @@ export const filters = {
 };
 
 $(async () => {
+    $(".selectpicker").selectpicker("refresh");
     addSelectOptions(datas.pathologies.data);
     const { pathologies } = datas;
     let formattedData = formatedMeridiens(pathologies.data)
