@@ -1,7 +1,8 @@
+console.log('eco')
 import { initDatas, addSelectOptions, renderSearchKeyWordInput } from "../data-table/js/data-tableFunc.js";
 import { formatedMeridiens } from "../data-table/util/func.js";
 import { updatePathologies } from '../data-table/store/data-table/pathoActions.js';
-
+console.log('salut')
 const datas = await initDatas();
 
 const eventSelect = () => {
