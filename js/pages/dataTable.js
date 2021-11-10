@@ -1,8 +1,6 @@
-console.log('eco')
 import { initDatas, addSelectOptions, renderSearchKeyWordInput } from "../data-table/js/data-tableFunc.js";
 import { formatedMeridiens } from "../data-table/util/func.js";
 import { updatePathologies } from '../data-table/store/data-table/pathoActions.js';
-console.log('salut')
 const datas = await initDatas();
 
 const eventSelect = () => {
@@ -11,14 +9,11 @@ const eventSelect = () => {
         const value = $(e.currentTarget).val();
         switch (id) {
             case 'caracteristique':
-                console.log('caracteristique')
                 return {'test' : 'test'}
                 break;
             case 'pathologie':
-                console.log('pathologie') // patho
                 break;
             case 'meridiens':
-                console.log('meridiens') // meridien en fonction des patho
                 break;
             default:
                 break;
@@ -71,14 +66,21 @@ export const filters = {
 };
 
 const fetchKeywords = async (search) => {
+
+    const myHeaders = new Headers();
+    
+    myHeaders.append('Content-Type', 'application/json')
+
+    const myInit = {
+        headers: myHeaders,
+    };
+    
     const symptomes = await fetch(CONFIG.API_HOST+'/symptomes/keywords')
         .then(response => response.json())
         .then(response => {
-            console.log(response)
             return response;
         })
         .catch(error => {
-            console.log(error)
             return error;
         });
 
@@ -141,16 +143,16 @@ $(async () => {
             try {
                 const filteredSymptomes = await fetchKeywords(text);
                 const idSymptomes = filteredSymptomes.map((symptome) => symptome.idS)
-    
-                formattedData = formattedData.filter(({symptomes}) => {
+                formattedData = datas.pathologies.data.filter(({symptomes}) => {
                     return symptomes.some(symptome => idSymptomes.includes(symptome.idS))
-                })
-               
-    
+                })    
                 initTable('#table', formattedData)
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
+        } else {
+            formattedData = datas.pathologies.data;
+            initTable('#table', formattedData)
         }
     })
 });

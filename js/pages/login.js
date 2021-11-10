@@ -39,10 +39,8 @@ $(() => {
 
             await fetch(CONFIG.API_HOST+'/authentification', myInit)
                 .then(response => {
-                    console.log(response)
                     return response.json()})
                 .then(data => {
-                    console.log(data)
                     if(data.code === 200) {                           
                         localStorage.setItem("token", "Bearer " + data.data.token);
 
@@ -60,7 +58,7 @@ $(() => {
                         }
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.error(error)
                     return error;
                 });
         }
