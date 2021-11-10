@@ -146,8 +146,6 @@ export const updatePathologies = async (filter, datas) => {
                     filterPathologies = filterPathologies.filter((pathologie) => {
                         return pathologie.desc.toLowerCase().includes(filters.caracteristique);
                     });
-
-                    console.log(filters.meridiens)
                     
                     if(filters.meridiens.length !== 0) {
                         
