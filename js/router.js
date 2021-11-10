@@ -1,5 +1,4 @@
 'use strict';
-
 function Router(routes) {
     try {
         if (!routes) {
@@ -8,10 +7,9 @@ function Router(routes) {
         this.constructor(routes);
         this.init();
     } catch (e) {
-        console.error(e);   
+        console.error(e);
     }
 }
-
 Router.prototype = {
     routes: undefined,
     rootElem: undefined,
@@ -19,34 +17,38 @@ Router.prototype = {
         this.routes = routes;
         this.rootElem = document.getElementById('app');
     },
+    
     init: function () {
         var r = this.routes;
-        (function(scope, r) { 
+        (function (scope, r) {
             window.addEventListener('hashchange', function (e) {
                 scope.hasChanged(scope, r);
             });
         })(this, r);
         this.hasChanged(this, r);
     },
-    hasChanged: function(scope, r){
+    hasChanged: function (scope, r) {
         if (window.location.hash.length > 0) {
             for (var i = 0, length = r.length; i < length; i++) {
                 var route = r[i];
-                if(route.isActiveRoute(window.location.hash.substr(1))) {
+                if (route.isActiveRoute(window.location.hash.substr(1))) {
                     scope.goToRoute(route.htmlName);
+                    if (route.jsScripts != undefined) {
+                        scope.loadJs(route.jsScripts);
+                    }
                 }
             }
         } else {
             for (var i = 0, length = r.length; i < length; i++) {
                 var route = r[i];
-                if(route.default) {
+                if (route.default) {
                     scope.goToRoute(route.htmlName);
                 }
             }
         }
     },
     goToRoute: function (htmlName) {
-        (function(scope) { 
+        (function (scope) {
             var url = 'views/' + htmlName,
                 xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -56,6 +58,28 @@ Router.prototype = {
             };
             xhttp.open('GET', url, true);
             xhttp.send();
+        })(this);
+    },
+    loadJs: function (jsScripts) {
+        (function (scope) {
+            if (typeof (jsScripts) == 'string') {
+                jsScripts = [jsScripts]
+            }
+            jsScripts.forEach(js => {
+                var url = 'js/pages/' + js
+                let url_plit = url.split('/')
+                let script = document.createElement('script')
+                let test = document.getElementById(url_plit[url_plit.length - 1])
+                if (test != null) {
+                    test.remove();
+                }
+                if(url === 'js/pages/dataTable.js') {
+                    script.type = 'module';
+                }
+                script.src = url
+                script.id = url_plit[url_plit.length - 1]
+                document.body.appendChild(script);
+            });
         })(this);
     }
 };
