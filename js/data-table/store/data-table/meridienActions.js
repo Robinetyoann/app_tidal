@@ -26,7 +26,7 @@ const loadMeridiensError = (errors) => {
 
 export const getMeridiens = async () => {
     meridienReducer(undefined, loadMeridiens());
-    return await fetch('http://localhost:8888/api_tidal/meridiens')
+    return await fetch(CONFIG.API_HOST+'/meridiens')
         .then(response => response.json())
         .then(response => {
             return meridienReducer(undefined, loadMeridiensSuccess(response));

@@ -27,7 +27,7 @@ const loadPathologiesError = (errors) => {
 
 export const apiCall = async () => {
     pathoReducer(undefined, loadPathologies());
-    return await fetch('http://localhost:8888/api_tidal/pathologies/symptomes/meridiens')
+    return await fetch(CONFIG.API_HOST+'/pathologies/symptomes/meridiens')
         .then(response => response.json())
         .then(response => {
             return pathoReducer(undefined, loadPathologiesSuccess(response));
