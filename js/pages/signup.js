@@ -49,7 +49,7 @@ $(() => {
                 body: formData
             };
 
-            await fetch('http://localhost:8888/api_tidal/authentification/register', myInit)
+            await fetch(CONFIG.API_HOST+'/authentification/register', myInit)
                 .then(response => response.json())
                 .then(data => {
                     if (data.code == 200) {

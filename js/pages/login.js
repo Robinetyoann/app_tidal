@@ -24,6 +24,7 @@ $(() => {
             let email = document.querySelector('#email').value
             let password = document.querySelector('#password').value
             var myHeaders = new Headers();
+          //  myHeaders.append('Access-Control-Allow-Origin','*');
             var formData = new FormData();
             formData.append('email', email);
             formData.append('password', password);
@@ -36,8 +37,10 @@ $(() => {
                 body: formData
             };
 
-            await fetch('http://localhost:8888/api_tidal/authentification', myInit)
-                .then(response => response.json())
+            await fetch(CONFIG.API_HOST+'/authentification', myInit)
+                .then(response => {
+                    console.log(response)
+                    return response.json()})
                 .then(data => {
                     console.log(data)
                     if(data.code === 200) {                           
@@ -57,6 +60,7 @@ $(() => {
                         }
                 })
                 .catch(error => {
+                    console.log(error)
                     return error;
                 });
         }

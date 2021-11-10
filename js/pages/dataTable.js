@@ -1,7 +1,8 @@
+console.log('eco')
 import { initDatas, addSelectOptions, renderSearchKeyWordInput } from "../data-table/js/data-tableFunc.js";
 import { formatedMeridiens } from "../data-table/util/func.js";
 import { updatePathologies } from '../data-table/store/data-table/pathoActions.js';
-
+console.log('salut')
 const datas = await initDatas();
 
 const eventSelect = () => {
@@ -70,17 +71,18 @@ export const filters = {
 };
 
 const fetchKeywords = async (search) => {
-    const symptomes = await fetch('http://localhost:8888/api_tidal/symptomes/keywords')
+    const symptomes = await fetch(CONFIG.API_HOST+'/symptomes/keywords')
         .then(response => response.json())
         .then(response => {
+            console.log(response)
             return response;
         })
         .catch(error => {
+            console.log(error)
             return error;
         });
 
-        const keyWordWithSymptomes = symptomes.data.filter(symptome => symptome.keywords !== null)
-
+        const keyWordWithSymptomes = symptomes.data.filter(symptome => symptome.keywords !== undefined&&symptome.keywords !== null)
     
         const filteredSymptomes = keyWordWithSymptomes.filter(({keywords}) => {
             return keywords.some(keyword => keyword.name.includes(search))
@@ -143,8 +145,7 @@ $(async () => {
                 formattedData = formattedData.filter(({symptomes}) => {
                     return symptomes.some(symptome => idSymptomes.includes(symptome.idS))
                 })
-                console.log(idSymptomes)
-                console.log(formattedData)
+               
     
                 initTable('#table', formattedData)
             } catch (error) {
